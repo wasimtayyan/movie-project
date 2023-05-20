@@ -42,16 +42,24 @@ const renderMovies = (movies) => {
   rowDiv.classList.add("row");
 
   movies.map((movie) => {
+    const colDiv = document.createElement("div");
+    colDiv.classList.add("col-md-4");
+
     const movieDiv = document.createElement("div");
+    movieDiv.classList.add("card");
     movieDiv.innerHTML = `
-        <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${
-      movie.title
-    } poster">
-        <h3>${movie.title}</h3>`;
+      <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${movie.title} poster" class="card-img-top">
+      <div class="card-body">
+        <h3 class="card-title">${movie.title}</h3>
+      </div>
+    `;
+
     movieDiv.addEventListener("click", () => {
       movieDetails(movie);
     });
-    CONTAINER.appendChild(movieDiv);
+
+    colDiv.appendChild(movieDiv);
+    rowDiv.appendChild(colDiv);
   });
 
   CONTAINER.innerHTML = "";
