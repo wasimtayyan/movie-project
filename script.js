@@ -12,8 +12,13 @@ const autorun = async () => {
 };
 
 // Don't touch this function please
+// const constructUrl = (path) => {
+//   return `${TMDB_BASE_URL}/${path}?api_key=6de312bb1131d8c5991b62ffbdfc1830`;
+// };
 const constructUrl = (path) => {
-  return `${TMDB_BASE_URL}/${path}?api_key=6de312bb1131d8c5991b62ffbdfc1830`;
+  return `${TMDB_BASE_URL}/${path}?api_key=${atob(
+    "NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI="
+  )}`;
 };
 
 // You may need to add to this function, definitely don't delete it.
@@ -38,6 +43,7 @@ const fetchMovie = async (movieId) => {
 
 // You'll need to play with this function in order to add features and enhance the style.
 const renderMovies = (movies) => {
+  CONTAINER.innerHTML = "";
   const rowDiv = document.createElement("div");
   rowDiv.classList.add("row");
 
@@ -47,12 +53,17 @@ const renderMovies = (movies) => {
 
     const movieDiv = document.createElement("div");
     movieDiv.classList.add("card");
-    movieDiv.innerHTML = `
+    if (movie.backdrop_path !== null){
+      movieDiv.innerHTML = `
       <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${movie.title} poster" class="card-img-top">
       <div class="card-body">
-        <h3 class="card-title">${movie.title}</h3>
+        <h3 class="card-title text-center">${movie.title}</h3>
       </div>
     `;
+    }
+     
+    console.log(movie)
+   
 
     movieDiv.addEventListener("click", () => {
       movieDetails(movie);
@@ -62,8 +73,9 @@ const renderMovies = (movies) => {
     rowDiv.appendChild(colDiv);
   });
 
-  CONTAINER.innerHTML = "";
+  
   CONTAINER.appendChild(rowDiv);
+  
 };
 // function renderMovieFromSearch(movies){
 //   CONTAINER.innerHTML = ""
@@ -101,8 +113,8 @@ const renderMovie = (movie) => {
   CONTAINER.innerHTML = `
     <div class="row">
         <div class="col-md-4">
-             <img id="movie-backdrop" src=${
-               BACKDROP_BASE_URL + movie.backdrop_path
+             <img id="movie-backdrop" src=${PROFILE_BASE_URL + movie.poster_path
+
              }>
         </div>
         <div class="col-md-8">
@@ -155,8 +167,8 @@ filterDropdown.addEventListener('mouseleave', () => {
 });
 
 //search function 
-const search = document.getElementById("search")
-search.onkeyup = (e)=>{
+const input = document.getElementById("search")
+input.onkeyup = (e)=>{
   searchInput(e.target.value)
 }
 
