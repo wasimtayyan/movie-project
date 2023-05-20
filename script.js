@@ -79,3 +79,17 @@ const renderMovie = (movie) => {
 };
 
 document.addEventListener("DOMContentLoaded", autorun);
+
+
+// codes by Izdihar dropdown part
+const filterDropdown = document.getElementsByClassName('filter')[0]; 
+const filterButton = document.getElementsByClassName('filter.btn')[0]; 
+
+filterButton.addEventListener('click', () => {
+  filterDropdown.style.display = 'block';
+});
+
+filterDropdown.addEventListener('mouseleave', () => {
+  filterDropdown.style.display = 'none';
+});
+
