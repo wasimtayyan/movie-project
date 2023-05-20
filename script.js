@@ -13,9 +13,7 @@ const autorun = async () => {
 
 // Don't touch this function please
 const constructUrl = (path) => {
-  return `${TMDB_BASE_URL}/${path}?api_key=${atob(
-    "NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI="
-  )}`;
+  return `${TMDB_BASE_URL}/${path}?api_key=6de312bb1131d8c5991b62ffbdfc1830`;
 };
 
 // You may need to add to this function, definitely don't delete it.
@@ -46,7 +44,8 @@ const renderMovies = (movies) => {
         <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${
       movie.title
     } poster">
-        <h3>${movie.title}</h3>`;
+        <h3>${movie.title}</h3>
+        <h4>language : ${movie.original_language}</h4>`;
     movieDiv.addEventListener("click", () => {
       movieDetails(movie);
     });
