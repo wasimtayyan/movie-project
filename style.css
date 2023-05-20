@@ -45,7 +45,7 @@ By ReCoded staff
    
  }
 
-a {
+.a {
     font-family: 'Pirata One', cursive;
     color: white;
     font-weight: lighter;
@@ -56,6 +56,9 @@ a {
     line-height: -1.5;
     text-decoration: none;
 } 
+.a:hover{
+    opacity: .80;
+}
 
 .logo img {
     height: auto;
