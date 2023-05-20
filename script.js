@@ -38,22 +38,24 @@ const fetchMovie = async (movieId) => {
 
 // You'll need to play with this function in order to add features and enhance the style.
 const renderMovies = (movies) => {
-  CONTAINER.innerHTML = ""
-  movies.map((movie) => {
-      const movieDiv = document.createElement("div");
-      movieDiv.innerHTML = ""
-      movieDiv.innerHTML = `
-        <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${movie.title
-        } poster">
-        <h3>${movie.title}</h3>`;
+  const rowDiv = document.createElement("div");
+  rowDiv.classList.add("row");
 
-      movieDiv.addEventListener("click", () => {
-        movieDetails(movie);
-      });
-      CONTAINER.appendChild(movieDiv);
-    
-    
+  movies.map((movie) => {
+    const movieDiv = document.createElement("div");
+    movieDiv.innerHTML = `
+        <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${
+      movie.title
+    } poster">
+        <h3>${movie.title}</h3>`;
+    movieDiv.addEventListener("click", () => {
+      movieDetails(movie);
+    });
+    CONTAINER.appendChild(movieDiv);
   });
+
+  CONTAINER.innerHTML = "";
+  CONTAINER.appendChild(rowDiv);
 };
 // function renderMovieFromSearch(movies){
 //   CONTAINER.innerHTML = ""
@@ -84,6 +86,7 @@ const renderMovies = (movies) => {
 
 //   });
 // }
+
 
 // You'll need to play with this function in order to add features and enhance the style.
 const renderMovie = (movie) => {
@@ -129,3 +132,31 @@ function searchInput(value) {
 
 
 document.addEventListener("DOMContentLoaded", autorun);
+
+
+// codes by Izdihar dropdown part
+const filterDropdown = document.getElementsByClassName('filter')[0]; 
+const filterButton = document.getElementsByClassName('filter.btn')[0]; 
+
+filterButton.addEventListener('click', () => {
+  filterDropdown.style.display = 'block';
+});
+
+filterDropdown.addEventListener('mouseleave', () => {
+  filterDropdown.style.display = 'none';
+});
+
+//search function 
+const search = document.getElementById("search")
+search.onkeyup = (e)=>{
+  searchInput(e.target.value)
+}
+
+function searchInput(value) {
+  fetch(`https://api.themoviedb.org/3/search/movie?api_key=6de312bb1131d8c5991b62ffbdfc1830&language=en-US&query=${value}&page=1&include_adult=false`)
+    .then(response => response.json())
+    // .then(data => console.log(data.results))
+    .then(data => renderMovies(data.results))
+    .catch(err => console.error(err));
+}
+
