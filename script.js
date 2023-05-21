@@ -59,7 +59,7 @@ const renderMovies = (movies) => {
     `;
     }
      
-    console.log(movie)
+    // console.log(movie)
    
 
     movieDiv.addEventListener("click", () => {
@@ -176,4 +176,31 @@ function searchInput(value) {
     .then(data => renderMovies(data.results))
     .catch(err => console.error(err));
 }
+
+//fetching genre here !!!
+const genreUl = document.querySelector("#genre")
+function getGenere() {
+  const url = constructUrl('genre/movie/list')
+  fetch(url)
+    .then(res => res.json())
+    .then(data => createGenreItme(data.genres))
+}
+function createGenreItme(itme){
+     itme.forEach(el => {
+      const genreItme = document.createElement('li')
+      genreItme.textContent = el.name
+      genreItme.classList.add('dropdown')
+      genreUl.appendChild(genreItme)
+
+      genreItme.addEventListener("click", () => {
+        const url = constructUrl('discover/movie') + `&with_genres=${el.id}`
+        fetch(url)
+          .then(resp => resp.json())
+          .then(data => renderMovies(data.results))
+      })
+     
+    })
+}
+getGenere()
+
 
