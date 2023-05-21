@@ -44,7 +44,9 @@ const renderMovies = (movies) => {
 
   movies.map((movie) => {
     const colDiv = document.createElement("div");
-    colDiv.classList.add("col-md-4");
+    colDiv.classList.add("col-12");
+    colDiv.classList.add("col-md-6");
+    colDiv.classList.add("col-lg-4");
 
     const movieDiv = document.createElement("div");
     movieDiv.classList.add("card");
