@@ -79,7 +79,7 @@ By ReCoded staff
     justify-content: space-between;
     align-items: center;
 }
- 
+
 .dropdown ul {
     position: absolute;
     background-color: #f1f1f1;
@@ -131,6 +131,7 @@ button{
     border: none;
 
 }
+
 /* tablet-responsive */
   @media  (min-width: 401px) and (max-width: 900px) {
     .logo img {
