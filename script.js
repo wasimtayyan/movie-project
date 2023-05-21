@@ -12,13 +12,8 @@ const autorun = async () => {
 };
 
 // Don't touch this function please
-// const constructUrl = (path) => {
-//   return `${TMDB_BASE_URL}/${path}?api_key=6de312bb1131d8c5991b62ffbdfc1830`;
-// };
 const constructUrl = (path) => {
-  return `${TMDB_BASE_URL}/${path}?api_key=${atob(
-    "NTQyMDAzOTE4NzY5ZGY1MDA4M2ExM2M0MTViYmM2MDI="
-  )}`;
+  return `${TMDB_BASE_URL}/${path}?api_key=6de312bb1131d8c5991b62ffbdfc1830`;
 };
 
 // You may need to add to this function, definitely don't delete it.

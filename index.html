@@ -1,73 +1,47 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
     <title>Movie</title>
-</head>
+  </head>
 
-<body>
-    <nav class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-1" >
-        <div class="logo">
-            <img src="images/the pirates bay logo.jpg" alt="The logo"> 
+  <body>
+    <nav>
+      <div class="logo">
+        <img src="images/the pirates bay logo.jpg" alt="The logo" />
+      </div>
+
+      <div class="navbar">
+        <div class="a">Home</div>
+        <div class="a">Actors</div>
+        <div class="a">About</div>
+        <div class="a dropdown" id="genre">Genre</div>
+        <ul id="genre-child">
+          <!-- li ginere here -->
+        </ul>
+
+        <div class=" filter">
+          <button class="filter.btn a">Filter</button>
+          <ul class="dropdown">
+            <li class="filter">Now playing</li>
+            <li class="filter">Up coming</li>
+            <li class="filter">Popular</li>
+            <li class="filter">Top rated</li>
+          </ul>
         </div>
+      </div>
 
-        <div class="navbar">
-             <div class="a">Home</div>
-             <div class="a" >Actors</div>
-             <div class="a" >About</div>
-             <div>
-                <div class="a" id="genre" >Genre</div>
-                <div class="dropdown genre" >
-                    <ul>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                        <li>Action</li>
-                    </ul>
-                </div>
-                </div>
-
-             
-
-             <div>
-                  <button class="filter.btn a">Filter</button>
-                  <div class="dropdown filter">
-                    <ul>
-                        <li class="filter" >Now playing</li>
-                        <li class="filter" >Up coming</li>
-                        <li class="filter" >Popular</li>
-                        <li class="filter" >Top rated</li>
-                    
-                    </ul>
-                  </div> 
-                </div>
-            </div>
-        
-
-        <input id="search" type="search" placeholder=" Search here!">
-     
-
+      <input id="search" type="search" placeholder=" Search here!" />
     </nav>
-    <div class="container">
-    </div>
+    <div class="container"></div>
     <script type="text/javascript" src="script.js"></script>
-</body>
-
+  </body>
 </html>
