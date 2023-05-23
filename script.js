@@ -191,8 +191,8 @@ document.addEventListener("DOMContentLoaded", autorun);
 
 
 // codes by Izdihar dropdown part
-const filterDropdown = document.getElementsByClassName('filter')[0];
-const filterButton = document.getElementsByClassName('filter.btn')[0];
+const filterDropdown = document.getElementsByClassName('filter')[0]; 
+const filterButton = document.getElementsByClassName('filter.btn')[0]; 
 
 filterButton.addEventListener('click', () => {
   filterDropdown.style.display = 'block';
@@ -224,12 +224,12 @@ function getGenere() {
     .then(res => res.json())
     .then(data => createGenreItme(data.genres))
 }
-function createGenreItme(itme) {
-  itme.forEach(el => {
-    const genreItme = document.createElement('li')
-    genreItme.textContent = el.name
-    genreItme.classList.add('dropdown')
-    genreUl.appendChild(genreItme)
+function createGenreItme(itme){
+     itme.forEach(el => {
+      const genreItme = document.createElement('li')
+      genreItme.textContent = el.name
+      genreItme.classList.add('genre')
+      genreUl.appendChild(genreItme)
 
     genreItme.addEventListener("click", () => {
       const url = constructUrl('discover/movie') + `&with_genres=${el.id}`
@@ -241,5 +241,24 @@ function createGenreItme(itme) {
   })
 }
 getGenere()
+
+
+const filter = document.querySelectorAll('.filter'); // Error: filter is a NodeList, not an array
+console.log(filter);
+filter.forEach(element => { // Error: filter.forEach is not a function
+  element.addEventListener('click', () => {
+   
+    if (element.textContent === 'Now playing') {
+      fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=6de312bb1131d8c5991b62ffbdfc1830')
+      .then(response => response.json())
+      .then(json => renderMovies(json.results))
+   } else if (element.textContent === 'Popular'){
+    fetch('https://api.themoviedb.org/3/movie/popular?api_key=6de312bb1131d8c5991b62ffbdfc1830')
+    .then(response => response.json())
+    .then(json => renderMovies(json.results))
+   } 
+  })
+})
+
 
 
