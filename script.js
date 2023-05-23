@@ -5,6 +5,7 @@ const PROFILE_BASE_URL = "http://image.tmdb.org/t/p/w185";
 const BACKDROP_BASE_URL = "http://image.tmdb.org/t/p/w780";
 const CONTAINER = document.querySelector(".container");
 
+
 // Don't touch this function please
 const autorun = async () => {
   const movies = await fetchMovies();
@@ -50,17 +51,17 @@ const renderMovies = (movies) => {
 
     const movieDiv = document.createElement("div");
     movieDiv.classList.add("card");
-    if (movie.backdrop_path !== null){
+    if (movie.backdrop_path !== null) {
       movieDiv.innerHTML = `
-      <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${movie.title} poster" class="card-img-top">
+      <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top" height="350px">
       <div class="card-body">
         <h3 class="card-title text-center">${movie.title}</h3>
       </div>
     `;
     }
-     
-    // console.log(movie)
-   
+
+    console.log(movie)
+
 
     movieDiv.addEventListener("click", () => {
       movieDetails(movie);
@@ -70,9 +71,9 @@ const renderMovies = (movies) => {
     rowDiv.appendChild(colDiv);
   });
 
-  
+
   CONTAINER.appendChild(rowDiv);
-  
+
 };
 // function renderMovieFromSearch(movies){
 //   CONTAINER.innerHTML = ""
@@ -91,14 +92,14 @@ const renderMovies = (movies) => {
 //           } poster">
 //         <h3>${movie.name}</h3>`;
 //       }
-      
+
 
 //       movieDiv.addEventListener("click", () => {
 //         movieDetails(movie);
 //       });
 //       CONTAINER.appendChild(movieDiv);
 //     }
-    
+
 
 
 //   });
@@ -107,33 +108,70 @@ const renderMovies = (movies) => {
 
 // You'll need to play with this function in order to add features and enhance the style.
 const renderMovie = (movie) => {
-  CONTAINER.innerHTML = `
-    <div class="row">
-        <div class="col-md-4">
-             <img id="movie-backdrop" src=${PROFILE_BASE_URL + movie.poster_path
 
-             }>
+  const res = async ()=> {
+    
+  }
+  CONTAINER.innerHTML = `
+    
+        <div class="row justify-content-center mb-3 mb-md-4">
+             <img id="movie-backdrop" class= "rounded" src=${BACKDROP_BASE_URL + movie.backdrop_path}>
         </div>
-        <div class="col-md-8">
+    <div class="row ">    
+      <div class="col-12 col-md-6">
             <h2 id="movie-title">${movie.title}</h2>
-            <p id="movie-release-date"><b>Release Date:</b> ${
-              movie.release_date
-            }</p>
-            <p id="movie-runtime"><b>Runtime:</b> ${movie.runtime} Minutes</p>
+            <p id="movie-release-date"><b>Release Date:</b> ${movie.release_date}</p>
+            <p><b>Rating:</b> ${movie.vote_average *10}% of ${movie.vote_count} users like this movie</p>
+            <p ><b>Languages:</b> ${movie.spoken_languages.map((languge) => `${languge.english_name}`) }</p>
             <h3>Overview:</h3>
             <p id="movie-overview">${movie.overview}</p>
+            <p><b>Director:</b> ${movie.id}</p>
         </div>
-        <div>
-            <h3>Actors:</h3>
-            <ul id="actors" class="list-unstyled"></ul>
-        </div>    
-    </div>`;
+        <div class="col-12 col-md-6">
+        <h4> TRILER </h4>
+        <img id="movie-backdrop" class= "rounded" src=${BACKDROP_BASE_URL + movie.backdrop_path}>
+      </div>
+        <div class= "row">
+        <div class= "col-12">
+        <h3>Actors:</h3>
+        <div id= "actorsInMovei"></div> 
+        </div>
+        <div class= "col-12">
+        <h3>Similar Movies:</h3>
+        <div id= "similerMoveies"></div> 
+        </div>
+        <div class= "col-12">
+        <h3>Production Companies:</h3> 
+        <div id='companies' class='row mb-2 justify-content-around my-lg-5'></div>
+        </div>
+        </div> 
+    `;
+  const companies = movie.production_companies
+  const companyDiv = document.querySelector('#companies')
+companies.slice(0,2).forEach(company => {
+  if(company.logo_path != null){
+    const copmCard = document.createElement('div')
+    copmCard.classList.add('d-flex')
+    // copmCard.classList.add('border')
+    copmCard.classList.add('flex-column')
+    copmCard.classList.add('justify-content-center')
+    copmCard.classList.add('col-4')
+    copmCard.innerHTML = `
+  <img id="movie-backdrop" class= "rounded" src=${PROFILE_BASE_URL + company.logo_path} >
+  
+  `
+    companyDiv.appendChild(copmCard)
+  }
+  
+  //height="100px"
+  
+})
 };
 
 
 //search function 
 const search = document.getElementById("search")
-search.onkeyup = (e)=>{
+search.onkeyup = (e) => {
   searchInput(e.target.value)
 }
 
@@ -153,8 +191,8 @@ document.addEventListener("DOMContentLoaded", autorun);
 
 
 // codes by Izdihar dropdown part
-const filterDropdown = document.getElementsByClassName('filter')[0]; 
-const filterButton = document.getElementsByClassName('filter.btn')[0]; 
+const filterDropdown = document.getElementsByClassName('filter')[0];
+const filterButton = document.getElementsByClassName('filter.btn')[0];
 
 filterButton.addEventListener('click', () => {
   filterDropdown.style.display = 'block';
@@ -166,7 +204,7 @@ filterDropdown.addEventListener('mouseleave', () => {
 
 //search function 
 const input = document.getElementById("search")
-input.onkeyup = (e)=>{
+input.onkeyup = (e) => {
   searchInput(e.target.value)
 }
 
@@ -186,21 +224,21 @@ function getGenere() {
     .then(res => res.json())
     .then(data => createGenreItme(data.genres))
 }
-function createGenreItme(itme){
-     itme.forEach(el => {
-      const genreItme = document.createElement('li')
-      genreItme.textContent = el.name
-      genreItme.classList.add('dropdown')
-      genreUl.appendChild(genreItme)
+function createGenreItme(itme) {
+  itme.forEach(el => {
+    const genreItme = document.createElement('li')
+    genreItme.textContent = el.name
+    genreItme.classList.add('dropdown')
+    genreUl.appendChild(genreItme)
 
-      genreItme.addEventListener("click", () => {
-        const url = constructUrl('discover/movie') + `&with_genres=${el.id}`
-        fetch(url)
-          .then(resp => resp.json())
-          .then(data => renderMovies(data.results))
-      })
-     
+    genreItme.addEventListener("click", () => {
+      const url = constructUrl('discover/movie') + `&with_genres=${el.id}`
+      fetch(url)
+        .then(resp => resp.json())
+        .then(data => renderMovies(data.results))
     })
+
+  })
 }
 getGenere()
 
