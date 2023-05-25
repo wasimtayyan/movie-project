@@ -20,7 +20,10 @@ const constructUrl = (path) => {
 // You may need to add to this function, definitely don't delete it.
 const movieDetails = async (movie) => {
   const movieRes = await fetchMovie(movie.id);
-  renderMovie(movieRes);
+  const videosRes = await videos(movie.id);
+  const similarRes = await similarMoveies(movie.id)
+  const castRes = await cast(movie.id)
+  renderMovie(movieRes,videosRes,similarRes,castRes);
 };
 
 // This function is to fetch movies. You may need to add it or change some part in it in order to apply some of the features.
@@ -44,6 +47,7 @@ const renderMovies = (movies) => {
   rowDiv.classList.add("row");
 
   movies.map((movie) => {
+    if (movie.backdrop_path !== null) {
     const colDiv = document.createElement("div");
     colDiv.classList.add("col-12");
     colDiv.classList.add("col-md-6");
@@ -51,31 +55,24 @@ const renderMovies = (movies) => {
 
     const movieDiv = document.createElement("div");
     movieDiv.classList.add("card");
-    if (movie.backdrop_path !== null) {
+    
       movieDiv.innerHTML = `
       <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top" height="350px">
       <div class="card-body">
         <h3 class="card-title text-center">${movie.title}</h3>
       </div>
     `;
+      movieDiv.addEventListener("click", () => {
+        movieDetails(movie);
+      });
+      colDiv.appendChild(movieDiv);
+      rowDiv.appendChild(colDiv);
+      CONTAINER.appendChild(rowDiv);
     }
-
-    console.log(movie)
-
-
-    movieDiv.addEventListener("click", () => {
-      movieDetails(movie);
-    });
-
-    colDiv.appendChild(movieDiv);
-    rowDiv.appendChild(colDiv);
   });
 
-
-  CONTAINER.appendChild(rowDiv);
-
 };
-// function renderMovieFromSearch(movies){
+// function renderMovies(movies){
 //   CONTAINER.innerHTML = ""
 //   movies.map((movie) => {
 //     if(movie.backdrop_path !== null){
@@ -99,15 +96,34 @@ const renderMovies = (movies) => {
 //       });
 //       CONTAINER.appendChild(movieDiv);
 //     }
-
-
-
 //   });
 // }
 
+//fetch movie's cast:
+const cast = async (movie) => {
+  const url = constructUrl(`movie/${movie}/credits`)
+  const res = await fetch(url)
+  return res.json()
+}
+
+//fetch triler videos :
+const videos = async (movie) => {
+const url = constructUrl(`movie/${movie}/videos`)
+const res = await fetch(url)
+return res.json();
+}
+
+// fetch similar movies : 
+
+const similarMoveies = async (movie) => {
+  const url = constructUrl(`movie/${movie}/similar`)
+  const res =  await fetch(url)
+  return res.json()
+}
+
 
 // You'll need to play with this function in order to add features and enhance the style.
-const renderMovie = (movie) => {
+const renderMovie = (movie, video, similar,cast) => {
 
   const res = async ()=> {
     
@@ -117,60 +133,96 @@ const renderMovie = (movie) => {
         <div class="row justify-content-center mb-3 mb-md-4">
              <img id="movie-backdrop" class= "rounded" src=${BACKDROP_BASE_URL + movie.backdrop_path}>
         </div>
-    <div class="row ">    
+    <div class="row px-4 px-lg-0">    
       <div class="col-12 col-md-6">
             <h2 id="movie-title">${movie.title}</h2>
             <p id="movie-release-date"><b>Release Date:</b> ${movie.release_date}</p>
+            <p ><b>Genres: </b> ${movie.genres.map(genre => ` ${genre.name} `)}</p>
             <p><b>Rating:</b> ${(movie.vote_average *10).toFixed(0)}% of ${movie.vote_count} users like this movie</p>
-            <p ><b>Languages:</b> ${movie.spoken_languages.map((languge) => `${languge.english_name}`) }</p>
+            <p ><b>Languages: </b> ${movie.spoken_languages.map((languge) => `${languge.english_name}`) }</p>
             <h3>Overview:</h3>
             <p id="movie-overview">${movie.overview}</p>
-            <p><b>Director:</b> ${movie.id}</p>
+            <p><b>Director: </b> ${cast.crew.find(crew => crew.job === 'Director').name} </p>
         </div>
         <div class="col-12 col-md-6">
         <h4> TRILER </h4>
-        <img id="movie-backdrop" class= "rounded" src=${BACKDROP_BASE_URL + movie.backdrop_path}>
+          <iframe width = 100% height = 100% class = "rounded" src="//www.youtube.com/embed/${video.results[0].key}" frameborder="0" allowfullscreen></iframe>
       </div>
-        <div class= "row">
+        <div class= "row px-4 mt-5 px-lg-0">
         <div class= "col-12">
         <h3>Actors:</h3>
-        <div id= "actorsInMovei"></div> 
+        <div id= "actorsInMovei"class = " flex-colmun d-lg-flex" ></div> 
         </div>
-        <div class= "col-12">
+        <div class= "col-12 ">
         <h3>Similar Movies:</h3>
-        <div id= "similerMoveies"></div> 
+        <div id= "similerMoveies" class = " flex-colmun d-lg-flex"></div> 
         </div>
         <div class= "col-12">
         <h3>Production Companies:</h3> 
-        <div id='companies' class='row mb-2 justify-content-around my-lg-5'></div>
+        <div id='companies' class='row mb-2 justify-content-around my-5'></div>
         </div>
         </div> 
     `;
+  // const Director = cast.crew.find(crew => crew.job === 'Director').name
   const companies = movie.production_companies
   const companyDiv = document.querySelector('#companies')
 companies.slice(0,2).forEach(company => {
   if(company.logo_path != null){
     const copmCard = document.createElement('div')
     copmCard.classList.add('d-flex')
-    // copmCard.classList.add('border')
     copmCard.classList.add('flex-column')
     copmCard.classList.add('justify-content-center')
     copmCard.classList.add('col-4')
     copmCard.innerHTML = `
-  <img id="movie-backdrop" class= "rounded" src=${PROFILE_BASE_URL + company.logo_path} >
-  
-  `
-    companyDiv.appendChild(copmCard)
+  <img id="movie-backdrop" class= "rounded" src=${PROFILE_BASE_URL + company.logo_path} > `
+   companyDiv.appendChild(copmCard)
   }
-  
-  //height="100px"
-  
 })
+  const similarDiv = document.querySelector("#similerMoveies")
+const similarMoveies = similar.results.slice(0,5)
+similarMoveies.forEach(movie => {
+  if (movie.poster_path !== null){
+   const movieDiv = document.createElement("div")
+   movieDiv.classList.add('col-12')
+   movieDiv.classList.add('col-md-6')
+   movieDiv.classList.add('col-lg-3')
+    movieDiv.innerHTML = `
+      <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top rounded" height="350px">
+      <div class="card-body">
+        <h3 class="card-title text-center">${movie.title}</h3>
+      </div>`
+      movieDiv.addEventListener('click',()=>{
+        movieDetails(movie)
+      })
+      similarDiv.appendChild(movieDiv)
+  }
+})
+  const actorsDiv = document.querySelector('#actorsInMovei')
+  const actorsInMovei = cast.cast.slice(0,5)
+  actorsInMovei.forEach(actor => {
+    const actorDiv = document.createElement("div")
+    actorDiv.classList.add('col-12')
+    actorDiv.classList.add('col-md-6')
+    actorDiv.classList.add('col-lg-3')
+    if (actor.profile_path !== null){
+      actorDiv.innerHTML = `
+      <img src="${PROFILE_BASE_URL + actor.profile_path}" alt="${actor.original_name} poster" class=" rounded" >
+      <div class="card-body">
+        <h3 class=" text-start">${actor.original_name}</h3>
+        <h5 class=" text-start"> ${actor.character}</h5>
+      </div>`
+      actorDiv.addEventListener('click', () => {
+        actorDetails(actor)
+      })
+      actorsDiv.appendChild(actorDiv)
+    }
+    
+  })
 };
 
 
 //search function 
-const search = document.getElementById("search")
+const search = document.querySelector("#search")
 search.onkeyup = (e) => {
   searchInput(e.target.value)
 }
@@ -178,12 +230,12 @@ search.onkeyup = (e) => {
 function searchInput(value) {
   fetch(`https://api.themoviedb.org/3/search/movie?api_key=6de312bb1131d8c5991b62ffbdfc1830&language=en-US&query=${value}&page=1&include_adult=false`)
     .then(response => response.json())
-    // .then(data => console.log(data.results))
+    //  .then(data => console.log(data))
     .then(data => renderMovies(data.results))
     .catch(err => console.error(err));
 }
 
-//fetch genre
+
 
 
 
@@ -202,19 +254,6 @@ filterDropdown.addEventListener('mouseleave', () => {
   filterDropdown.style.display = 'none';
 });
 
-//search function 
-const input = document.getElementById("search")
-input.onkeyup = (e) => {
-  searchInput(e.target.value)
-}
-
-function searchInput(value) {
-  fetch(`https://api.themoviedb.org/3/search/movie?api_key=6de312bb1131d8c5991b62ffbdfc1830&language=en-US&query=${value}&page=1&include_adult=false`)
-    .then(response => response.json())
-    // .then(data => console.log(data.results))
-    .then(data => renderMovies(data.results))
-    .catch(err => console.error(err));
-}
 
 //fetching genre here !!!
 const genreUl = document.querySelector("#genre")
@@ -244,7 +283,7 @@ getGenere()
 
 
 const filter = document.querySelectorAll('.filter'); // Error: filter is a NodeList, not an array
-console.log(filter);
+// console.log(filter);
 filter.forEach(element => { // Error: filter.forEach is not a function
   element.addEventListener('click', () => {
    
