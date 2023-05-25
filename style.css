@@ -4,11 +4,14 @@ By ReCoded staff
 }
 
 .container {
-    padding-top: 32px;
+    padding-top: 2em;
 }
 
 #actors {
     margin: 24px 16px 0 0;
+}
+img{
+    max-width: 100%;
 }
 
 
@@ -33,6 +36,7 @@ By ReCoded staff
     border: 1px solid rgba(0, 0, 0, 0.3);
     z-index: 200;
     position: sticky;
+    top: 0;
 
 } 
   
