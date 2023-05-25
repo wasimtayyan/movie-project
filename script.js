@@ -221,9 +221,9 @@ similarMoveies.forEach(movie => {
 };
 
 
-//search function 
+//search function :
 const search = document.querySelector("#search")
-search.onkeyup = (e) => {
+search.onkeyup = (e)=>{
   searchInput(e.target.value)
 }
 
@@ -236,15 +236,9 @@ function searchInput(value) {
 }
 
 
-
-
-
-document.addEventListener("DOMContentLoaded", autorun);
-
-
-// codes by Izdihar dropdown part
-const filterDropdown = document.getElementsByClassName('filter')[0]; 
-const filterButton = document.getElementsByClassName('filter.btn')[0]; 
+// codes by Izdihar dropdown part; filter and genre
+const filterDropdown = document.getElementById('filter'); 
+const filterButton = document.getElementById('filter-btn')
 
 filterButton.addEventListener('click', () => {
   filterDropdown.style.display = 'block';
@@ -254,6 +248,16 @@ filterDropdown.addEventListener('mouseleave', () => {
   filterDropdown.style.display = 'none';
 });
 
+const genreul = document.getElementById('genre');  //genre ul
+const genreDropdown = document.getElementById('genre-dropdown') //genre dropdown 
+
+genreDropdown.addEventListener('click', () => {
+  genreul.style.display = 'block'; 
+});
+
+genreul.addEventListener('mouseleave', () => {
+  genreul.style.display = 'none';
+});
 
 //fetching genre here !!!
 const genreUl = document.querySelector("#genre")
@@ -291,13 +295,49 @@ filter.forEach(element => { // Error: filter.forEach is not a function
       fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=6de312bb1131d8c5991b62ffbdfc1830')
       .then(response => response.json())
       .then(json => renderMovies(json.results))
-   } else if (element.textContent === 'Popular'){
+   } 
+   else if (element.textContent === 'Up coming'){
+    fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=6de312bb1131d8c5991b62ffbdfc1830')
+    .then(response => response.json())
+    .then(json => renderMovies(json.results))
+   } 
+   else if (element.textContent === 'Popular'){
     fetch('https://api.themoviedb.org/3/movie/popular?api_key=6de312bb1131d8c5991b62ffbdfc1830')
     .then(response => response.json())
     .then(json => renderMovies(json.results))
    } 
+   else if (element.textContent === 'Top rated') {
+    fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=6de312bb1131d8c5991b62ffbdfc1830')
+    .then(response => response.json())
+    .then(json => renderMovies(json.results))
+   }
   })
 })
 
 
+//navbar home: when I click on the home, the main page displays//not working yet!
 
+const home = document.querySelector('#home')
+home.addEventListener('click', async () => {
+  // call the function that fetches movies from an API
+  const movies = await fetchMovies();
+
+  // Call the renderMovies function with the retrieved movies
+  renderMovies(movies.results);
+});
+
+
+//actors dropdown
+
+const actorsPage = document.querySelector('.actors-page')
+actorsPage.addEventListener('click', () => {
+  //takes you to the actors page
+})
+
+//about page
+const aboutPage = document.querySelector('.about-page')
+aboutPage.addEventListener('click', () => {
+  //takes you to the about page
+})
+
+document.addEventListener("DOMContentLoaded", autorun);
