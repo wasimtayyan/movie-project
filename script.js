@@ -130,8 +130,8 @@ const renderMovie = (movie) => {
 };
 
 
-//search function 
-const search = document.getElementById("search")
+//search function :
+const search = document.querySelector("#search")
 search.onkeyup = (e)=>{
   searchInput(e.target.value)
 }
@@ -143,8 +143,6 @@ function searchInput(value) {
     .then(data => renderMovies(data.results))
     .catch(err => console.error(err));
 }
-
-//fetch genre
 
 
 
@@ -173,20 +171,6 @@ genreDropdown.addEventListener('click', () => {
 genreul.addEventListener('mouseleave', () => {
   genreul.style.display = 'none';
 });
-
-//search function 
-const input = document.getElementById("search")
-input.onkeyup = (e)=>{
-  searchInput(e.target.value)
-}
-
-function searchInput(value) {
-  fetch(`https://api.themoviedb.org/3/search/movie?api_key=6de312bb1131d8c5991b62ffbdfc1830&language=en-US&query=${value}&page=1&include_adult=false`)
-    .then(response => response.json())
-    // .then(data => console.log(data.results))
-    .then(data => renderMovies(data.results))
-    .catch(err => console.error(err));
-}
 
 //fetching genre here !!!
 const genreUl = document.querySelector("#genre")
