@@ -80,7 +80,7 @@ By ReCoded staff
 /* newly added 22.05.2023 */
 .dropdown {
     position: absolute;
-    background-color: #ddd;
+    background-color: #777474;
     width: 100px;
     display: flex;
     justify-content: space-around;
@@ -104,10 +104,16 @@ By ReCoded staff
 }
 
 .dropdown li:hover {
-    background-color: #777474;
+    background-color: #474242;
 }
 
+#genre {
+    margin-right: 25px;
+}
 
+#filter {
+    margin-left: 25px;
+}
 
 .dropdown {
     display: none;

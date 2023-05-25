@@ -151,7 +151,7 @@ function searchInput(value) {
 document.addEventListener("DOMContentLoaded", autorun);
 
 
-// codes by Izdihar dropdown part
+// codes by Izdihar dropdown part; filter and genre
 const filterDropdown = document.getElementById('filter'); 
 const filterButton = document.getElementById('filter-btn')
 
@@ -161,6 +161,17 @@ filterButton.addEventListener('click', () => {
 
 filterDropdown.addEventListener('mouseleave', () => {
   filterDropdown.style.display = 'none';
+});
+
+const genreul = document.getElementById('genre');  //genre ul
+const genreDropdown = document.getElementById('genre-dropdown') //genre dropdown 
+
+genreDropdown.addEventListener('click', () => {
+  genreul.style.display = 'block'; 
+});
+
+genreul.addEventListener('mouseleave', () => {
+  genreul.style.display = 'none';
 });
 
 //search function 
@@ -206,10 +217,7 @@ getGenere()
 
 // filter dropdown
 
-// const nowPlayingMovies = document.getElementById('now-playing')
-// const upComingMovies = document.getElementById('up-coming')
-// const popularMovies = document.getElementById('popular')
-// const topRatedMovies = document.getElementById('top-rated')
+
 
 const filter = document.querySelectorAll('.filter'); // Error: filter is a NodeList, not an array
 console.log(filter);
@@ -220,52 +228,47 @@ filter.forEach(element => { // Error: filter.forEach is not a function
       fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=6de312bb1131d8c5991b62ffbdfc1830')
       .then(response => response.json())
       .then(json => renderMovies(json.results))
-   } else if (element.textContent === 'Popular'){
+   } 
+   else if (element.textContent === 'Up coming'){
+    fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=6de312bb1131d8c5991b62ffbdfc1830')
+    .then(response => response.json())
+    .then(json => renderMovies(json.results))
+   } 
+   else if (element.textContent === 'Popular'){
     fetch('https://api.themoviedb.org/3/movie/popular?api_key=6de312bb1131d8c5991b62ffbdfc1830')
     .then(response => response.json())
     .then(json => renderMovies(json.results))
    } 
+   else if (element.textContent === 'Top rated') {
+    fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=6de312bb1131d8c5991b62ffbdfc1830')
+    .then(response => response.json())
+    .then(json => renderMovies(json.results))
+   }
   })
 })
 
 
+//navbar home: when I click on the home, the main page displays//not working yet!
+
+const home = document.querySelector('#home')
+home.addEventListener('click', async () => {
+  // call the function that fetches movies from an API
+  const movies = await fetchMovies();
+
+  // Call the renderMovies function with the retrieved movies
+  renderMovies(movies);
+});
 
 
- 
-// Event handler for the "Now playing" filter
-function NowPlaying() {
-  const value = 'now-playing';
-  redirectToMovieSearch(value);
-}
+//actors dropdown
 
-// Event handler for the "Upcoming" filter
-function upcoming() {
-  const value = 'up-coming';
-  redirectToMovieSearch(value);
-}
+const actorsPage = document.querySelector('.actors-page')
+actorsPage.addEventListener('click', () => {
+  //takes you to the actors page
+})
 
-// Event handler for the "Popular" filter
-function popular() {
-  const value = 'popular';
-  redirectToMovieSearch(value);
-}
-
-// Event handler for the "Top rated" filter
-function toprated() {
-  const value = 'top-rated';
-  redirectToMovieSearch(value);
-}
-
-// Redirect function
-function redirectToMovieSearch(value) {
-  const baseUrl = 'https://api.themoviedb.org/3/search/movie';
-  const apiKey = '6de312bb1131d8c5991b62ffbdfc1830';
-  const language = 'en-US';
-  const page = 1;
-  const includeAdult = false;
-
-  const url = `${baseUrl}?api_key=${apiKey}&language=${language}&query=${value}&page=${page}&include_adult=${includeAdult}`;
-
- window.location.href = url;
-}
-
+//about page
+const aboutPage = document.querySelector('.about-page')
+aboutPage.addEventListener('click', () => {
+  //takes you to the about page
+})
