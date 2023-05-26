@@ -46,7 +46,7 @@ const renderMovies = (movies) => {
   const rowDiv = document.createElement("div");
   rowDiv.classList.add("row");
 
-  movies.map((movie) => {
+  movies.forEach((movie) => {
     if (movie.backdrop_path !== null) {
     const colDiv = document.createElement("div");
     colDiv.classList.add("col-12");
@@ -57,14 +57,19 @@ const renderMovies = (movies) => {
     movieDiv.classList.add("card");
     
       movieDiv.innerHTML = `
-      <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top" height="350px">
+      <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top height="300px"" >
       <div class="card-body">
-        <h3 class="card-title text-center">${movie.title}</h3>
+        <h3 class="card-title ">${movie.title}</h3>
+        <p class="card-rating">${(movie.vote_average * 10).toFixed(0)}%</p>
       </div>
     `;
       movieDiv.addEventListener("click", () => {
         movieDetails(movie);
       });
+      movieDiv.classList.add("clickable-card");
+      movieDiv.classList.add("mb-2");
+      movieDiv.classList.add("mb-md-5");
+      movieDiv.classList.add("height");
       colDiv.appendChild(movieDiv);
       rowDiv.appendChild(colDiv);
       CONTAINER.appendChild(rowDiv);
@@ -194,6 +199,7 @@ similarMoveies.forEach(movie => {
       movieDiv.addEventListener('click',()=>{
         movieDetails(movie)
       })
+      movieDiv.classList.add("clickable-card");
       similarDiv.appendChild(movieDiv)
   }
 })
@@ -209,14 +215,12 @@ similarMoveies.forEach(movie => {
       <img src="${PROFILE_BASE_URL + actor.profile_path}" alt="${actor.original_name} poster" class=" rounded" >
       <div class="card-body">
         <h3 class=" text-start">${actor.original_name}</h3>
-        <h5 class=" text-start"> ${actor.character}</h5>
       </div>`
       actorDiv.addEventListener('click', () => {
         actorDetails(actor)
       })
       actorsDiv.appendChild(actorDiv)
     }
-    
   })
 };
 
