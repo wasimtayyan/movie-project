@@ -161,44 +161,7 @@ img{
     }
   }
 
-  /* mobile-responsive */
-@media (max-width: 400px) {
-    .logo img {
-        height: auto;
-        width: 30px;
-    }
-     nav {
-        width: 100%;
-        font-weight: 500;
-        height: 55px;
-        font-size: xx-small;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center; 
-        padding: 5px;
 
-    } 
-    a {
-        padding: 2px;
-    }
-
-    .navbar {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        font-size: smaller;
-        padding: 0;
-        }
-    #filter-btn {
-        font-size: xx-small;  
-    }
-
-    #search {
-        width: 70px;
-        height: 20px;
-    }
-  }
   /* add by hayder */
 
   .clickable-card {
@@ -228,5 +191,79 @@ img{
     color: #ff9900;
  }
   .height{
-    min-height: 600px;
+    min-height: 690px;
+  }
+  /* add by wasim */
+.actor-info{
+    display: flex;
+}
+  .actor-text{
+    width: 70%;
+    padding-right: 3em;
+  }
+  .actor-img{
+    width: 30%;
+    align-self: flex-start;
+  }
+  .photo{
+    padding:0 5em;
+
+  }
+  /* mobile-responsive */
+@media (max-width: 400px) {
+    .logo img {
+        /* height: auto;
+        width: 30px; */
+        display: none;
+    }
+     nav {
+        width: 100%;
+        font-weight: 500;
+        height: 55px;
+        font-size: xx-small;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center; 
+        padding: 5px;
+
+    } 
+    a {
+        padding: 2px;
+    }
+
+    .navbar {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: smaller;
+        padding: 0;
+        }
+    #filter-btn {
+        font-size: xx-small;  
+    }
+
+    #search {
+        width: 65px;
+        height: 20px;
+    }
+    /* add by wasim */
+    .container{
+        padding:1em .50em;   
+    }
+    .actor-info{
+        flex-direction: column-reverse;
+    }
+    .actor-text{
+        width: 100%;
+        padding: 0;
+    }
+    .actor-img{
+        width: 100%;
+        margin-bottom: 1em;
+        padding-left: 4.5em;
+    }
+    .photo{
+        padding: 0;
+    }
   }

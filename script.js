@@ -11,7 +11,7 @@ const autorun = async () => {
   const movies = await fetchMovies();
   const idRes = await fetchMovie(movies.results.map(result => result.id))
   renderMovies(movies.results, idRes);
-  // console.log(idRes)
+
 };
 
 // Don't touch this function please
@@ -223,7 +223,8 @@ const renderMovie = (movie, video, similar, cast) => {
         <h3 class=" text-start">${actor.original_name}</h3>
       </div>`
       actorDiv.addEventListener('click', () => {
-        actorDetails(actor)
+        
+        // actorDetails(actorsInMovei)
       })
       actorsDiv.appendChild(actorDiv)
     }
@@ -362,12 +363,12 @@ actorsPage.addEventListener('click', async () => {
   renderActors(actorsData.results)
 })
 const renderActors = (actors) => {
+  
   CONTAINER.innerHTML = ""
   const row = document.createElement('div')
   row.classList.add("row")
-  // contant.classList.add("d-flex")
-  // contant.classList.add("justify-content-center")
   actors.map(actor => {
+  
     if (actor.profile_path !== null){
       const actorDiv = document.createElement("div")
       actorDiv.classList.add('clickable-card')
@@ -400,15 +401,59 @@ const url = constructUrl(`person/${actor}`)
 const res = await fetch(url)
 return res.json()
 }
-//target an actor
+// target an actor
 const actorDetails = async (actor) => {
 const actorRes = await fetchactor(actor.id)
-renderActor(actorRes)
+const relatedMovies = actor.known_for
+  console.log(actorRes)
+renderActor(actorRes,relatedMovies)
 }
 //render in container
 
-const renderActor = (actor) => {
-  console.log(actor)
+const renderActor = (actor,movies) => {
+  CONTAINER.innerHTML = ""
+  const actorDiv = document.createElement("div")
+  actorDiv.classList.add("actor-div")
+  actorDiv.innerHTML = `
+  <div class = "actor-info">
+
+  <div class = "actor-text" >
+  <h1>${actor.name}</h1>
+  <p>Gender : ${actor.gender === 1 ? 'Female':'Male'}</p>
+  <p>Popularity : ${actor.popularity}</p>
+  <p>Birthday : ${actor.birthday}</p>
+  <p id = "biography"> Biography: ${actor.biography}</p>
+  </div>
+
+  <div class = "actor-img">
+  <img src="${PROFILE_BASE_URL + actor.profile_path}" alt="${actor.original_name} poster" class="photo" >
+  </div>
+
+  </div>
+
+  <div id = "related" class = "row">
+  
+  </div>
+  `
+  const relatedMovies = actorDiv.querySelector('#related')
+
+ movies.forEach(movie => {
+  const movieDiv = document.createElement("div")
+  movieDiv.classList.add("col-12")
+  movieDiv.classList.add("col-md-6")
+  movieDiv.classList.add("col-lg-4")
+  movieDiv.innerHTML = `
+  <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top rounded" height="350px">
+      <div class="card-body">
+        <h3 class="card-title text-center">${movie.title}</h3>
+      </div>
+  `
+  relatedMovies.addEventListener("click",()=> {
+    movieDetails(movie)
+  })
+  relatedMovies.appendChild(movieDiv)
+ })
+  CONTAINER.appendChild(actorDiv)
 }
 
 
