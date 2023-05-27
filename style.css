@@ -205,7 +205,7 @@ img{
     cursor: pointer;
   }
   
-  .card-rating {
+  /* .card-rating {
     font-size: 18px;
     font-weight: bold;
     color: #ff9900;
@@ -217,20 +217,16 @@ img{
     justify-content: space-between;
     align-items: center;
   }
-  
+   */
   .card-title {
     font-size: 18px;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    font-weight: 700;
+   
   }
-  .card-body{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-  }
+ .cardText {
+    font-weight: 700;
+    color: #ff9900;
+ }
   .height{
-    min-height: 650px;
+    min-height: 600px;
   }
