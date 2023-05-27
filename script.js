@@ -9,7 +9,9 @@ const CONTAINER = document.querySelector(".container");
 // Don't touch this function please
 const autorun = async () => {
   const movies = await fetchMovies();
-  renderMovies(movies.results);
+  const idRes = await fetchMovie(movies.results.map(result => result.id))
+  renderMovies(movies.results, idRes);
+  // console.log(idRes)
 };
 
 // Don't touch this function please
@@ -41,7 +43,7 @@ const fetchMovie = async (movieId) => {
 };
 
 // You'll need to play with this function in order to add features and enhance the style.
-const renderMovies = (movies) => {
+const renderMovies = (movies,ID) => {
   CONTAINER.innerHTML = "";
   const rowDiv = document.createElement("div");
   rowDiv.classList.add("row");
@@ -59,8 +61,12 @@ const renderMovies = (movies) => {
       movieDiv.innerHTML = `
       <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top height="300px"" >
       <div class="card-body">
-        <h3 class="card-title ">${movie.title}</h3>
-        <p class="card-rating">${(movie.vote_average * 10).toFixed(0)}%</p>
+        <h3 class="card-title align-self-start">GENRES :</h3>
+        <p class="cardText">${ID.genres.map(genre => ` ${genre.name} `)}</p>
+        <p  class = "card-title" > RATEING :</p>
+        <div class="progress">
+  <div class="progress-bar bg-warning" role="progressbar" style="width:${(movie.vote_average * 10).toFixed(0)}%" aria-valuenow="${(movie.vote_average * 10).toFixed(0)}" aria-valuemin="0" aria-valuemax="100">${(movie.vote_average * 10).toFixed(0)} %</div>
+</div>
       </div>
     `;
       movieDiv.addEventListener("click", () => {
@@ -231,12 +237,12 @@ search.onkeyup = (e) => {
   searchInput(e.target.value)
 }
 
-function searchInput(value) {
-  fetch(`https://api.themoviedb.org/3/search/movie?api_key=6de312bb1131d8c5991b62ffbdfc1830&language=en-US&query=${value}&page=1&include_adult=false`)
-    .then(response => response.json())
-    //  .then(data => console.log(data))
-    .then(data => renderMovies(data.results))
-    .catch(err => console.error(err));
+const  searchInput = async (value) => {
+  const url = constructUrl('search/movie') +`&language=en-US&query=${value}&page=1&include_adult=false`
+  const resp = await fetch(url)
+  const data = await resp.json()
+  const idRes = await fetchMovie(data.results.map(result => result.id))
+  renderMovies(data.results, idRes)
 }
 
 
@@ -278,11 +284,12 @@ function createGenreItme(itme) {
     genreItme.classList.add('genre')
     genreUl.appendChild(genreItme)
 
-    genreItme.addEventListener("click", () => {
+    genreItme.addEventListener("click",async () => {
       const url = constructUrl('discover/movie') + `&with_genres=${el.id}`
-      fetch(url)
-        .then(resp => resp.json())
-        .then(data => renderMovies(data.results))
+      const resp = await fetch(url)
+      const data = await resp.json()
+      const idRes = await fetchMovie(data.results.map(result => result.id))
+         renderMovies(data.results,idRes)
     })
 
   })
@@ -293,27 +300,35 @@ getGenere()
 const filter = document.querySelectorAll('.filter'); // Error: filter is a NodeList, not an array
 // console.log(filter);
 filter.forEach(element => { // Error: filter.forEach is not a function
-  element.addEventListener('click', () => {
+  element.addEventListener('click',async () => {
 
     if (element.textContent === 'Now playing') {
-      fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=6de312bb1131d8c5991b62ffbdfc1830')
-        .then(response => response.json())
-        .then(json => renderMovies(json.results))
+      const url = constructUrl('movie/now_playing') 
+      const resp = await fetch(url)
+      const data = await resp.json()
+      const idRes = await fetchMovie(data.results.map(result => result.id))
+      renderMovies(data.results, idRes)
     }
     else if (element.textContent === 'Up coming') {
-      fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=6de312bb1131d8c5991b62ffbdfc1830')
-        .then(response => response.json())
-        .then(json => renderMovies(json.results))
+      const url = constructUrl('movie/up_coming')
+      const resp = await fetch(url)
+      const data = await resp.json()
+      const idRes = await fetchMovie(data.results.map(result => result.id))
+      renderMovies(data.results, idRes)
     }
     else if (element.textContent === 'Popular') {
-      fetch('https://api.themoviedb.org/3/movie/popular?api_key=6de312bb1131d8c5991b62ffbdfc1830')
-        .then(response => response.json())
-        .then(json => renderMovies(json.results))
+      const url = constructUrl('movie/popular')
+      const resp = await fetch(url)
+      const data = await resp.json()
+      const idRes = await fetchMovie(data.results.map(result => result.id))
+      renderMovies(data.results, idRes)
     }
     else if (element.textContent === 'Top rated') {
-      fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=6de312bb1131d8c5991b62ffbdfc1830')
-        .then(response => response.json())
-        .then(json => renderMovies(json.results))
+      const url = constructUrl('movie/top_rated')
+      const resp = await fetch(url)
+      const data = await resp.json()
+      const idRes = await fetchMovie(data.results.map(result => result.id))
+      renderMovies(data.results, idRes)
     }
   })
 })
@@ -325,9 +340,9 @@ const home = document.querySelector('#home')
 home.addEventListener('click', async () => {
   // call the function that fetches movies from an API
   const movies = await fetchMovies();
-
+  const idRes = await fetchMovie(movies.results.map(result => result.id))
   // Call the renderMovies function with the retrieved movies
-  renderMovies(movies.results);
+  renderMovies(movies.results,idRes);
 });
 
 
