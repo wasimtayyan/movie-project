@@ -46,12 +46,14 @@ const renderMovies = (movies) => {
   const rowDiv = document.createElement("div");
   rowDiv.classList.add("row");
 
+
   movies.forEach((movie) => {
     if (movie.backdrop_path !== null) {
       const colDiv = document.createElement("div");
       colDiv.classList.add("col-12");
       colDiv.classList.add("col-md-6");
       colDiv.classList.add("col-lg-4");
+      colDiv.id = 'card'
 
       const movieDiv = document.createElement("div");
       movieDiv.classList.add("card");
@@ -178,6 +180,7 @@ const renderMovie = (movie, video, similar, cast) => {
       copmCard.classList.add('flex-column')
       copmCard.classList.add('justify-content-center')
       copmCard.classList.add('col-4')
+      copmCard.id = "company-card"
       copmCard.innerHTML = `
   <img id="movie-backdrop" class= "rounded" src=${PROFILE_BASE_URL + company.logo_path} > `
       companyDiv.appendChild(copmCard)
@@ -191,6 +194,7 @@ const renderMovie = (movie, video, similar, cast) => {
       movieDiv.classList.add('col-12')
       movieDiv.classList.add('col-md-6')
       movieDiv.classList.add('col-lg-3')
+      movieDiv.id = "similar-movie"
       movieDiv.innerHTML = `
       <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top rounded" height="350px">
       <div class="card-body">
@@ -210,6 +214,7 @@ const renderMovie = (movie, video, similar, cast) => {
     actorDiv.classList.add('col-12')
     actorDiv.classList.add('col-md-6')
     actorDiv.classList.add('col-lg-3')
+    actorDiv.id = "actor-card"
     if (actor.profile_path !== null) {
       actorDiv.innerHTML = `
       <img src="${PROFILE_BASE_URL + actor.profile_path}" alt="${actor.original_name} poster" class=" rounded" >
@@ -362,6 +367,7 @@ const renderActors = (actors) => {
       actorDiv.classList.add('col-12')
       actorDiv.classList.add('col-md-6')
       actorDiv.classList.add('col-lg-3')
+      actorDiv.id = "actors-main-page"
       actorDiv.innerHTML = `
     <img src="${PROFILE_BASE_URL + actor.profile_path}" alt="${actor.original_name} poster" class=" rounded" >
       <div class="card-body">
@@ -404,4 +410,19 @@ aboutPage.addEventListener('click', () => {
   //takes you to the about page
 })
 
+//this code make the name display block you hover on the image of the footer
+const images = document.querySelectorAll('.image-container img');
+
+images.forEach((image) => {
+  image.addEventListener('mouseover', function() {
+    const span = this.nextElementSibling;
+    span.style.display = 'block'
+  });
+  image.addEventListener('mouseleave', function() {
+    const span = this.nextElementSibling;
+    span.style.display = 'none'
+  });
+});
+
 document.addEventListener("DOMContentLoaded", autorun);
+
