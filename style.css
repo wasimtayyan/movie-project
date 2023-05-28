@@ -55,11 +55,19 @@ img{
 /* movies-page, actors */
 
 #actor-card img {
-    
-    object-position: center;
+  
+    object-position: center; 
     margin-left: 25px;
-    margin-top: 25px;
+    margin-top: 25px; 
     
+}
+#actor-card {
+  margin: 0 1em;
+  padding-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 #actor-card img:hover {
     transform: scale(1.1);
@@ -251,11 +259,102 @@ span {
     }
   }
 
+
+  /* add by hayder */
+
+  .clickable-card {
+    cursor: pointer;
+  }
+  .card-height:hover::before {
+    content: attr(data-movie-overview);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    z-index: 1;
+    pointer-events: none;
+    cursor: pointer;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+   
+  }
+ .cardText {
+    font-weight: 700;
+    color: #ff9900;
+ }
+  .card-height{
+    min-height: 690px;
+  }
+
+
+
+  /* add by wasim */
+.actor-info{
+    display: flex;
+}
+  .actor-text{
+    width: 70%;
+    padding-right: 3em;
+  }
+  .actor-img{
+    width: 30%;
+    align-self: flex-start;
+  }
+  .photo{
+    padding:0 5em;
+
+  }
+
+
+#actorsInMovei{
+  overflow: auto;
+  white-space: nowrap;
+  background-color: rgba(128, 128, 128, 0.147);
+}
+.related{
+  margin:0 2em;
+  background-color: rgba(128, 128, 128, 0.147);
+  overflow: auto;
+  white-space: nowrap;
+  border-radius: 10px;
+
+}
+.about{
+  background-color: #ff9900;
+  color: #fff;
+  border: #777474 1px dashed;
+  border-radius: 30px;
+  margin: 3em 0;
+  padding: 3em 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.about-name{
+  text-align: right;
+  padding: 1em 0;
+}
+.gif{
+  align-self: center;
+}
+
   /* mobile-responsive */
 @media (max-width: 400px) {
     .logo img {
-        height: auto;
-        width: 30px;
+        /* height: auto;
+        width: 30px; */
+        display: none;
     }
      nav {
         width: 100%;
@@ -285,38 +384,37 @@ span {
     }
 
     #search {
-        width: 70px;
+        width: 65px;
         height: 20px;
     }
+    /* add by wasim */
+    .container{
+        padding:1em .50em;   
+    }
+    .actor-info{
+        flex-direction: column-reverse;
+    }
+    .actor-text{
+        width: 100%;
+        padding: 0;
+    }
+    .actor-img{
+        width: 100%;
+        margin-bottom: 1em;
+        padding-left: 4.5em;
+    }
+    .photo{
+        padding: 0;
+    }
   }
-  /* add by hayder */
-
-  .clickable-card {
+  .card-click {
+    transition: transform 0.3s ease;
     cursor: pointer;
+    width: 100%;
+    padding-left: 20px;
   }
-  
-  /* .card-rating {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ff9900;
-    margin: 0;
-    padding: 5px;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-   */
-  .card-title {
-    font-size: 18px;
-    font-weight: 700;
-   
-  }
- .cardText {
-    font-weight: 700;
-    color: #ff9900;
- }
-  .height{
-    min-height: 600px;
+
+
+  .card-click:hover {
+    transform: translateY(-5px);
   }
