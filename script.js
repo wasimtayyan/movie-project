@@ -77,7 +77,8 @@ const renderMovies = (movies,ID) => {
       movieDiv.classList.add("clickable-card");
       movieDiv.classList.add("mb-2");
       movieDiv.classList.add("mb-md-5");
-      movieDiv.classList.add("height");
+      movieDiv.classList.add("card-height");
+      movieDiv.setAttribute("data-movie-overview", movie.overview); // Set the movie overview as an attribute
       colDiv.appendChild(movieDiv);
       rowDiv.appendChild(colDiv);
       CONTAINER.appendChild(rowDiv);
@@ -85,32 +86,7 @@ const renderMovies = (movies,ID) => {
   });
 
 };
-// function renderMovies(movies){
-//   CONTAINER.innerHTML = ""
-//   movies.map((movie) => {
-//     if(movie.backdrop_path !== null){
-//       const movieDiv = document.createElement("div");
-//       movieDiv.innerHTML = ""
-//       if (movie.media_type === "movie"){
-//         movieDiv.innerHTML = `
-//         <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${movie.title
-//           } poster">
-//         <h3>${movie.title}</h3>`;
-//       } else if (movie.media_type === "tv"){
-//         movieDiv.innerHTML = `
-//         <img src="${BACKDROP_BASE_URL + movie.backdrop_path}" alt="${movie.title
-//           } poster">
-//         <h3>${movie.name}</h3>`;
-//       }
 
-
-//       movieDiv.addEventListener("click", () => {
-//         movieDetails(movie);
-//       });
-//       CONTAINER.appendChild(movieDiv);
-//     }
-//   });
-// }
 
 //fetch movie's cast:
 const cast = async (movie) => {
@@ -167,11 +143,11 @@ const renderMovie = (movie, video, similar, cast) => {
         <div id= "actorsInMovei"class = " flex-colmun d-lg-flex" ></div> 
         </div>
         <div class= "col-12 ">
-        <h3>Similar Movies:</h3>
-        <div id= "similerMoveies" class = " flex-colmun d-lg-flex"></div> 
+        <h3 class = " mt-md-5">Similar Movies:</h3>
+        <div id= "similerMoveies" class = " flex-colmun d-lg-flex related"></div> 
         </div>
         <div class= "col-12">
-        <h3>Production Companies:</h3> 
+        <h3 class = "my-2 my-lg-4 ">Production Companies:</h3> 
         <div id='companies' class='row mb-2 justify-content-around my-5'></div>
         </div>
         </div> 
@@ -199,7 +175,8 @@ const renderMovie = (movie, video, similar, cast) => {
       const movieDiv = document.createElement("div")
       movieDiv.classList.add('col-12')
       movieDiv.classList.add('col-md-6')
-      movieDiv.classList.add('col-lg-3')
+      movieDiv.classList.add('col-lg-4')
+      movieDiv.classList.add('pt-3')
       movieDiv.id = "similar-movie"
       movieDiv.innerHTML = `
       <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top rounded" height="350px">
@@ -224,12 +201,12 @@ const renderMovie = (movie, video, similar, cast) => {
     if (actor.profile_path !== null) {
       actorDiv.innerHTML = `
       <img src="${PROFILE_BASE_URL + actor.profile_path}" alt="${actor.original_name} poster" class=" rounded" >
-      <div class="card-body">
-        <h3 class=" text-start">${actor.original_name}</h3>
+      <div class="">
+        <h3 class=" text-center py-2">${actor.original_name}</h3>
       </div>`
       actorDiv.addEventListener('click', () => {
         
-        // actorDetails(actorsInMovei)
+        actorDetails(actor)
       })
       actorsDiv.appendChild(actorDiv)
     }
@@ -303,8 +280,7 @@ function createGenreItme(itme) {
 getGenere()
 
 
-const filter = document.querySelectorAll('.filter'); // Error: filter is a NodeList, not an array
-// console.log(filter);
+const filter = document.querySelectorAll('.filter'); // Error: filter is a NodeList, not an array;
 filter.forEach(element => { // Error: filter.forEach is not a function
   element.addEventListener('click',async () => {
 
@@ -340,7 +316,7 @@ filter.forEach(element => { // Error: filter.forEach is not a function
 })
 
 
-//navbar home: when I click on the home, the main page displays//not working yet!
+//navbar home: when I click on the home, the main page displays//not working yet ! , it's working now :D
 
 const home = document.querySelector('#home')
 home.addEventListener('click', async () => {
@@ -410,13 +386,11 @@ return res.json()
 // target an actor
 const actorDetails = async (actor) => {
 const actorRes = await fetchactor(actor.id)
-const relatedMovies = actor.known_for
-  console.log(actorRes)
-renderActor(actorRes,relatedMovies)
+renderActor(actorRes)
 }
 //render in container
 
-const renderActor = (actor,movies) => {
+const renderActor = (actor) => {
   CONTAINER.innerHTML = ""
   const actorDiv = document.createElement("div")
   actorDiv.classList.add("actor-div")
@@ -437,29 +411,47 @@ const renderActor = (actor,movies) => {
 
   </div>
 
-  <div id = "related" class = "row">
+  <div id = "related" class = " d-flex related">
   
   </div>
   `
-  const relatedMovies = actorDiv.querySelector('#related')
+  const biography = actorDiv.querySelector("#biography")  
+  if (actor.deathday !== null) {
+    const deathDay = document.createElement('p')
+    deathDay.textContent = `Deathday : ${actor.deathday}`
+    biography.parentNode.insertBefore(deathDay,biography)
+  }
+  CONTAINER.appendChild(actorDiv)
+  moviesRelatedToActore(actor.id)
 
- movies.forEach(movie => {
-  const movieDiv = document.createElement("div")
-  movieDiv.classList.add("col-12")
-  movieDiv.classList.add("col-md-6")
-  movieDiv.classList.add("col-lg-4")
-  movieDiv.innerHTML = `
+}
+
+const moviesRelatedToActore = async (actor) => {
+  const relatedMovies = document.querySelector('#related')
+  const url = constructUrl(`person/${actor}/movie_credits`)
+  const res = await fetch(url)
+  const data = await res.json() 
+  data.cast.slice(0, 6).forEach(movie => {
+    if (movie.poster_path !== null){
+      const movieDiv = document.createElement("div")
+      movieDiv.classList.add("col-12")
+      movieDiv.classList.add("col-md-6")
+      movieDiv.classList.add("col-lg-4")
+      movieDiv.classList.add("pt-3")
+      movieDiv.classList.add("card-click")
+      movieDiv.innerHTML = `
   <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top rounded" height="350px">
       <div class="card-body">
         <h3 class="card-title text-center">${movie.title}</h3>
       </div>
   `
-  relatedMovies.addEventListener("click",()=> {
-    movieDetails(movie)
+      relatedMovies.addEventListener("click", () => {
+        movieDetails(movie)
+      })
+      relatedMovies.appendChild(movieDiv)
+    }
+   
   })
-  relatedMovies.appendChild(movieDiv)
- })
-  CONTAINER.appendChild(actorDiv)
 }
 
 
@@ -467,7 +459,17 @@ const renderActor = (actor,movies) => {
 //about page
 const aboutPage = document.querySelector('.about-page')
 aboutPage.addEventListener('click', () => {
-  //takes you to the about page
+  CONTAINER.innerHTML = ""
+  const about = document.createElement('div')
+  about.classList.add('about')
+  about.innerHTML= `
+  <h1 class = 'text-center'>&ldquo; THERE IS NO PIRARCY HERE, JUST HANGING AROUND MOVIES &rdquo;</h1>
+  <p class = 'about-name'> -WASIM AL-TAYAN-</p>
+  <div class = 'gif'>
+  <img src="./images/beetlejuice-just-hanging-around.gif" alt="" class = 'rounded'>
+  </div>
+  `
+  CONTAINER.appendChild(about)
 })
 
 //this code make the name display block you hover on the image of the footer
