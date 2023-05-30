@@ -3,8 +3,13 @@ By ReCoded staff
     width: 100%;
 }
 
+
 .container {
     padding-top: 2em;
+}
+body{
+      background-color: rgba(7, 7, 7, 0.998);
+
 }
 
 #actors {
@@ -14,16 +19,25 @@ img{
     max-width: 100%;
 }
 
+
 #similar-movie img:hover{
     transform: scale(1.1);
     transition: transform 0.2s ease-in-out;
     z-index: 10;
+    -webkit-box-shadow:0px 15px 38px -5px #ff9900 ;
+    box-shadow: 0px 15px 38px -5px #ff9900;
+    border: #ff9900 1px solid;
 }
 
 
 
 
 /* company-cards: makes rotate 180 degree and gets back to original status*/
+#company-card{
+  background: #777474;
+  padding: 1em;
+  border-radius: 20px;
+}
 
 #company-card img {
     animation: rotateLogo 1s linear ;
@@ -47,7 +61,9 @@ img{
     transform: scale(1.1);
     transition: transform 0.2s ease-in-out;
     z-index: 10;
-    box-shadow: 5px 5px 10px gray;
+    -webkit-box-shadow:0px 15px 38px -5px #ff9900 ;
+    box-shadow: 0px 15px 38px -5px #ff9900;
+    border: #ff9900 1px solid;
   }
 
  
@@ -62,7 +78,7 @@ img{
     
 }
 #actor-card {
-  margin: 0 1em;
+  /* margin: 0 .25em; */
   padding-bottom: 1em;
   display: flex;
   flex-direction: column;
@@ -73,7 +89,9 @@ img{
     transform: scale(1.1);
     transition: transform 0.2s ease-in-out;
     z-index: 10;
-    box-shadow: 5px 5px 10px gray;
+    -webkit-box-shadow:0px 15px 38px -5px #ff9900 ;
+    box-shadow: 0px 15px 38px -5px #ff9900;
+    border: #ff9900 1px solid;
 }
 
 
@@ -85,6 +103,9 @@ img{
   
   .card:hover {
     transform: translateY(-5px);
+    -webkit-box-shadow:0px 15px 38px -5px #ff9900 ;
+    box-shadow: 0px 15px 38px -5px #ff9900;
+    border: #ff9900 1px solid;
   }
 
 /* By Izdihar */
@@ -93,7 +114,8 @@ img{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Caudex'
+    font-family: 'Caudex', serif;
+    color: #fff;
 }
 
   nav {
@@ -317,11 +339,11 @@ span {
   }
 
 
-#actorsInMovei{
+/* #actorsInMovei{
   overflow: auto;
   white-space: nowrap;
   background-color: rgba(128, 128, 128, 0.147);
-}
+} */
 .related{
   margin:0 2em;
   background-color: rgba(128, 128, 128, 0.147);
@@ -334,6 +356,7 @@ span {
   background-color: #ff9900;
   color: #fff;
   border: #777474 1px dashed;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 30px;
   margin: 3em 0;
   padding: 3em 1.5em;
@@ -341,19 +364,16 @@ span {
   flex-direction: column;
   justify-content: center;
 }
-.about-name{
-  text-align: right;
-  padding: 1em 0;
-}
+
 .gif{
   align-self: center;
+  padding-top: 4em ;
 }
+
 
   /* mobile-responsive */
 @media (max-width: 400px) {
     .logo img {
-        /* height: auto;
-        width: 30px; */
         display: none;
     }
      nav {
@@ -405,6 +425,12 @@ span {
     }
     .photo{
         padding: 0;
+    }
+    #actorsInMovei{
+      max-width: 30%;
+    }
+    #similarMovies{
+      max-width: 30%;
     }
   }
   .card-click {
