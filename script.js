@@ -75,7 +75,7 @@ const renderMovies = (movies,ID) => {
         movieDetails(movie);
       });
       movieDiv.classList.add("clickable-card");
-      movieDiv.classList.add("mb-2");
+      movieDiv.classList.add("mb-5");
       movieDiv.classList.add("mb-md-5");
       movieDiv.classList.add("card-height");
       movieDiv.setAttribute("data-movie-overview", movie.overview); // Set the movie overview as an attribute
@@ -137,18 +137,18 @@ const renderMovie = (movie, video, similar, cast) => {
         <h4> TRILER </h4>
           <iframe width = 100% height = 100% class = "rounded" src="//www.youtube.com/embed/${video.results[0].key}" frameborder="0" allowfullscreen></iframe>
       </div>
-        <div class= "row px-4 mt-5 px-lg-0">
-        <div class= "col-12">
+        <div class= "flex-colmun px-4 mt-5 px-lg-0">
+        <div class= "">
         <h3>Actors:</h3>
-        <div id= "actorsInMovei"class = " flex-colmun d-lg-flex" ></div> 
+        <div id= "actorsInMovei"class = "d-flex related" ></div> 
         </div>
-        <div class= "col-12 ">
+        <div class= " ">
         <h3 class = " mt-md-5">Similar Movies:</h3>
-        <div id= "similerMoveies" class = " flex-colmun d-lg-flex related"></div> 
+        <div id= "similarMovies" class = "d-flex related"></div> 
         </div>
-        <div class= "col-12">
+        <div class= "">
         <h3 class = "my-2 my-lg-4 ">Production Companies:</h3> 
-        <div id='companies' class='row mb-2 justify-content-around my-5'></div>
+        <div id='companies' class='flex-colmun d-lg-flex mb-2 justify-content-around my-5'></div>
         </div>
         </div> 
     `;
@@ -158,9 +158,7 @@ const renderMovie = (movie, video, similar, cast) => {
   companies.slice(0, 2).forEach(company => {
     if (company.logo_path != null) {
       const copmCard = document.createElement('div')
-      copmCard.classList.add('d-flex')
-      copmCard.classList.add('flex-column')
-      copmCard.classList.add('justify-content-center')
+      copmCard.classList.add('my-2')
       copmCard.classList.add('col-4')
       copmCard.id = "company-card"
       copmCard.innerHTML = `
@@ -168,12 +166,12 @@ const renderMovie = (movie, video, similar, cast) => {
       companyDiv.appendChild(copmCard)
     }
   })
-  const similarDiv = document.querySelector("#similerMoveies")
+  const similarDiv = document.querySelector("#similarMovies")
   const similarMoveies = similar.results.slice(0, 5)
   similarMoveies.forEach(movie => {
     if (movie.poster_path !== null) {
       const movieDiv = document.createElement("div")
-      movieDiv.classList.add('col-12')
+      movieDiv.classList.add('col-8')
       movieDiv.classList.add('col-md-6')
       movieDiv.classList.add('col-lg-4')
       movieDiv.classList.add('pt-3')
@@ -196,7 +194,7 @@ const renderMovie = (movie, video, similar, cast) => {
     const actorDiv = document.createElement("div")
     actorDiv.classList.add('col-12')
     actorDiv.classList.add('col-md-6')
-    actorDiv.classList.add('col-lg-3')
+    actorDiv.classList.add('col-lg-4')
     actorDiv.id = "actor-card"
     if (actor.profile_path !== null) {
       actorDiv.innerHTML = `
@@ -464,7 +462,6 @@ aboutPage.addEventListener('click', () => {
   about.classList.add('about')
   about.innerHTML= `
   <h1 class = 'text-center'>&ldquo; THERE IS NO PIRARCY HERE, JUST HANGING AROUND MOVIES &rdquo;</h1>
-  <p class = 'about-name'> -WASIM AL-TAYAN-</p>
   <div class = 'gif'>
   <img src="./images/beetlejuice-just-hanging-around.gif" alt="" class = 'rounded'>
   </div>
