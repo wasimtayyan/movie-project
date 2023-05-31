@@ -63,9 +63,9 @@ const renderMovies = (movies,ID) => {
       movieDiv.innerHTML = `
       <img src="${BACKDROP_BASE_URL + movie.poster_path}" alt="${movie.title} poster" class="card-img-top height="300px"" >
       <div class="card-body">
-        <h3 class="card-title align-self-start">GENRES :</h3>
+        <h3 class="card-title align-self-start text-dark">GENRES :</h3>
         <p class="cardText">${ID.genres.map(genre => ` ${genre.name} `)}</p>
-        <p  class = "card-title" > RATEING :</p>
+        <p  class = "card-title text-dark" > RATEING :</p>
         <div class="progress">
   <div class="progress-bar bg-warning" role="progressbar" style="width:${(movie.vote_average * 10).toFixed(0)}%" aria-valuenow="${(movie.vote_average * 10).toFixed(0)}" aria-valuemin="0" aria-valuemax="100">${(movie.vote_average * 10).toFixed(0)} %</div>
 </div>
