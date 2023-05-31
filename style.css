@@ -370,6 +370,9 @@ span {
   align-self: center;
   padding-top: 4em ;
 }
+#search{
+  color: black;
+}
 
 
   /* mobile-responsive */
