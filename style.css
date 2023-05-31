@@ -99,8 +99,9 @@ img{
 /* movies in the main page */
 .card {
     transition: transform 0.3s ease;
+    
   }
-  
+
   .card:hover {
     transform: translateY(-5px);
     -webkit-box-shadow:0px 15px 38px -5px #ff9900 ;
