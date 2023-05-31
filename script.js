@@ -290,7 +290,7 @@ filter.forEach(element => { // Error: filter.forEach is not a function
       renderMovies(data.results, idRes)
     }
     else if (element.textContent === 'Up coming') {
-      const url = constructUrl('movie/up_coming')
+      const url = constructUrl('movie/upcoming')
       const resp = await fetch(url)
       const data = await resp.json()
       const idRes = await fetchMovie(data.results.map(result => result.id))
